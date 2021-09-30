@@ -1,4 +1,4 @@
-gTTS.js
+gTTS-typescript  is the typescript version for gtts.js
 ---
 
 gTTS.js (Google Text to Speech): a ported version of gTTS python library which is
