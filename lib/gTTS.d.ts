@@ -79,7 +79,7 @@ declare class gTTsClass {
     tk: string;
   };
   stream(): NodeJS.ReadableStream;
-  save(save_file: string, callback: any): void;
+  save(save_file: string, callback: any): Promise<void>;
   _tokenize(text: string, max_size: number): string[];
   _minimize(thestring: string, delim: string, max_size: any): any;
 }

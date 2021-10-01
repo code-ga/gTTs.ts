@@ -1,7 +1,37 @@
 import gTTs = require("../lib/gTTS");
-var text =
-  "xin chào tất cả mọi người tớ là tritranduc admin của kênh những điều hay tv tớ chúc các bạn một buổi tối tốt lành chúc mọi người thật nhiều sức khoẻ và thật vui vẻ";
-var gtts =  new gTTs(text, "vi")
-gtts.save("./output.mp4", (err) => {
-    console.log(err)
-})
+import axios from "axios";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+const main = async () => {
+  var param = {
+    format: "json",
+    action: "query",
+    prop: "extracts",
+    exlimit: "max",
+    explaintext: "",
+    exintro: "",
+    titles: "doraemon",
+    redirects: "",
+  };
+  var data = (
+    await axios.get("http://vi.wikipedia.org/w/api.php", {
+      params: param,
+    })
+  ).data.query.pages;
+
+  var text: string[] | string = ["a"];
+  for (const key of Object.keys(data)) {
+    text.push(data[key].extract);
+  }
+  // var txtFileData =  await readFileSync(join(__dirname, "../text.txt"), {
+  //   encoding: "utf-8"
+  // });
+  text = text.join("");
+  console.log(text.length);
+  var gtts = new gTTs(text, "vi");
+  await gtts.save("./output.mp4", (err) => {
+    console.log(err);
+  });
+};
+main();
